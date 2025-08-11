@@ -42,17 +42,23 @@ export default function Home() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24">
-      <Card className="w-full max-w-4xl">
+    <main className="flex min-h-screen flex-col items-center justify-center p-4 sm:p-8 lg:p-24">
+      <Card className="w-full max-w-full sm:max-w-4xl">
         <CardHeader>
-          <CardTitle>6DOF Robotic Arm Torque & Power Calculator</CardTitle>
+          <CardTitle className="text-center text-lg sm:text-xl">
+            6DOF Robotic Arm Torque & Power Calculator
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <CalculatorForm onCalculate={handleCalculate} results={results} />
           {results && "error" in results ? (
             <div className="text-red-500 mt-4">{results.error}</div>
           ) : (
-            results && <ResultsTable results={results as MotorResult[]} />
+            results && (
+              <div className="overflow-x-auto mt-4">
+                <ResultsTable results={results as MotorResult[]} />
+              </div>
+            )
           )}
         </CardContent>
       </Card>

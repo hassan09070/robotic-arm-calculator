@@ -70,12 +70,12 @@ export default function CalculatorForm({ onCalculate, results }: CalculatorFormP
       m_payload: 5, // 5 kg payload
       density: 2700, // Aluminum density in kg/m³
       links: [
-        { length: 0.5, radius: 0.02 }, // Link 1
-        { length: 0.4, radius: 0.02 }, // Link 2
-        { length: 0.3, radius: 0.015 }, // Link 3
-        { length: 0.3, radius: 0.015 }, // Link 4
-        { length: 0.2, radius: 0.01 }, // Link 5
-        { length: 0.1, radius: 0.01 }, // Link 6
+        { length: 0.5, radius: 0.02 },
+        { length: 0.4, radius: 0.02 },
+        { length: 0.3, radius: 0.015 },
+        { length: 0.3, radius: 0.015 },
+        { length: 0.2, radius: 0.01 },
+        { length: 0.1, radius: 0.01 },
       ],
       motors: [
         { mass: 2, bodyLength: 0.1, pivotPosition: 0, rpm: 100, gearRatio: 10, safetyFactor: 1.5 },
@@ -86,7 +86,7 @@ export default function CalculatorForm({ onCalculate, results }: CalculatorFormP
         { mass: 0.5, bodyLength: 0.04, pivotPosition: 1.7, rpm: 250, gearRatio: 3, safetyFactor: 1.5 },
       ],
     });
-    onCalculate(form.getValues()); // Trigger calculation with dummy values
+    onCalculate(form.getValues());
   };
 
   const handleResetValues = () => {
@@ -103,13 +103,12 @@ export default function CalculatorForm({ onCalculate, results }: CalculatorFormP
         safetyFactor: 1,
       })),
     });
-    onCalculate(form.getValues()); // Clear results by triggering calculation
+    onCalculate(form.getValues());
   };
 
   const handleExportToExcel = () => {
     const workbook = XLSX.utils.book_new();
 
-    // Results Sheet
     if (results && !("error" in results)) {
       const resultData = [
         ["Motor", "Torque Total (Nm)", "Torque SF (Nm)", "Torque Before (Nm)", "Torque Before SF (Nm)", "Power (W)", "Power SF (W)"],
@@ -126,7 +125,6 @@ export default function CalculatorForm({ onCalculate, results }: CalculatorFormP
       const resultSheet = XLSX.utils.aoa_to_sheet(resultData);
       XLSX.utils.book_append_sheet(workbook, resultSheet, "Results");
     } else {
-      // If no valid results, export an empty sheet with headers
       const resultData = [
         ["Motor", "Torque Total (Nm)", "Torque SF (Nm)", "Torque Before (Nm)", "Torque Before SF (Nm)", "Power (W)", "Power SF (W)"],
       ];
@@ -134,7 +132,6 @@ export default function CalculatorForm({ onCalculate, results }: CalculatorFormP
       XLSX.utils.book_append_sheet(workbook, resultSheet, "Results");
     }
 
-    // Download Excel file
     XLSX.writeFile(workbook, "robotic_arm_results.xlsx");
   };
 
@@ -142,7 +139,7 @@ export default function CalculatorForm({ onCalculate, results }: CalculatorFormP
     <FormProvider {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         <Tabs defaultValue="general" className="w-full">
-          <TabsList className="grid w-full grid-cols-3">
+          <TabsList className="flex flex-col sm:grid sm:grid-cols-3 w-full">
             <TabsTrigger value="general">General</TabsTrigger>
             <TabsTrigger value="links">Links</TabsTrigger>
             <TabsTrigger value="motors">Motors</TabsTrigger>
@@ -195,7 +192,7 @@ export default function CalculatorForm({ onCalculate, results }: CalculatorFormP
                 <AccordionItem key={i} value={`link-${i}`}>
                   <AccordionTrigger>Link {i + 1}</AccordionTrigger>
                   <AccordionContent>
-                    <div className="space-y-4">
+                    <div className="space-y-4 sm:space-y-6">
                       <FormField
                         control={form.control}
                         name={`links.${i}.length`}
@@ -246,7 +243,7 @@ export default function CalculatorForm({ onCalculate, results }: CalculatorFormP
                 <AccordionItem key={i} value={`motor-${i}`}>
                   <AccordionTrigger>Motor {i + 1}</AccordionTrigger>
                   <AccordionContent>
-                    <div className="space-y-4">
+                    <div className="space-y-4 sm:space-y-6">
                       <FormField
                         control={form.control}
                         name={`motors.${i}.mass`}
@@ -363,7 +360,7 @@ export default function CalculatorForm({ onCalculate, results }: CalculatorFormP
           </TabsContent>
         </Tabs>
 
-        <div className="flex space-x-4">
+        <div className="flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0">
           <Button type="submit">Calculate</Button>
           <Button type="button" variant="secondary" onClick={handleFillDummyValues}>
             Fill Dummy Values
