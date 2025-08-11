@@ -175,7 +175,6 @@ export function performCalculations(data: InputData): MotorResult[] | { error: s
     motorResults.push({ T_total: T1_total, T_sf: T1_sf, T_before: T1_before, T_before_sf: T1_before_sf, P: P1, P_sf: P1_sf });
 
     return motorResults;
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     return { error: error.message || "An error occurred during calculations" };
   }
