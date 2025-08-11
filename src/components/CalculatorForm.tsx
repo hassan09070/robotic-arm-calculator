@@ -40,6 +40,7 @@ type FormValues = z.infer<typeof formSchema>;
 
 interface CalculatorFormProps {
   onCalculate: (data: FormValues) => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   results: any; // Will be MotorResult[] | { error: string } | null
 }
 
@@ -111,6 +112,7 @@ export default function CalculatorForm({ onCalculate, results }: CalculatorFormP
 
     // Results Sheet
     if (results && !("error" in results)) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const resultData = [
         ["Motor", "Torque Total (Nm)", "Torque SF (Nm)", "Torque Before (Nm)", "Torque Before SF (Nm)", "Power (W)", "Power SF (W)"],
         ...results.map((result: any, i: number) => [
